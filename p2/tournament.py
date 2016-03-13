@@ -88,21 +88,7 @@ def playerStandings():
         wins: the number of matches the player has won
         matches: the number of matches the player has played
     """
-    standings = []
-    players = execute('SELECT * FROM players;')
-    matches = execute('SELECT * FROM matches;')
-    for (name, id) in players:
-        # count the player's wins
-        num_wins = len([m for m in matches if getWinner(m) == id])
-
-        # count the player's matches
-        num_matches = len([m for m in matches if getWinner(m) == id or getLoser(m) == id])
-
-        # append to output
-        standings.append((id, name, num_wins, num_matches))
-
-    # sort by number of wins
-    return sorted(standings, key=lambda s: s[2])
+    return execute('SELECT * FROM standings;')
 
 
 def getWinner(match):
@@ -144,7 +130,12 @@ def swissPairings():
     """
     pairings = []
     standings = playerStandings()
+
+    # must have even number of players
     num_players = len(standings)
+    if num_players % 2 != 0:
+        return []
+
     rank = 0
     while rank < num_players:
         s1 = standings[rank+0]  # player with this rank
@@ -152,6 +143,7 @@ def swissPairings():
         pairing = (getId(s1), getName(s1), getId(s2), getName(s2))
         pairings.append(pairing)
         rank += 2  # process one pair at a time
+
     return pairings
 
 

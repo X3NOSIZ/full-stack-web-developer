@@ -1,13 +1,5 @@
 
-# VM Setup
-
-Follow the instructions at the link below to set up the necessary VM:
-
-[https://docs.google.com/document/d/16IgOm4XprTaKxAa8w02y028oBECOoB1EI1ReddADEeY/pub?embedded=true](https://docs.google.com/document/d/16IgOm4XprTaKxAa8w02y028oBECOoB1EI1ReddADEeY/pub?embedded=true)
-
-It is critical that `tournament.sql` (see below) be imported into the database `tournament` after the database has been created.
-
-# Dependencies
+# Files
 
 ```
 /
@@ -16,8 +8,35 @@ It is critical that `tournament.sql` (see below) be imported into the database `
 |--tournament_test.py
 ```
 
-Put the submitted files in the directory `/vagrant/tournament`.
+# Setup
+
+From psql, import tournament.sql to create the SQL database for the tournament project.
+
+```
+=> \i tournament.sql
+```
+
+# Dependencies
+
+The installation script below assumes a Linux environment.
+
+```
+apt-get -qqy update
+apt-get -qqy install postgresql python-psycopg2
+apt-get -qqy install python-flask python-sqlalchemy
+apt-get -qqy install python-pip
+pip install bleach
+pip install oauth2client
+pip install requests
+pip install httplib2
+pip install redis
+pip install passlib
+pip install itsdangerous
+pip install flask-httpauth
+```
 
 # Running Tests
+
+From the directory containing the project files:
 
 `python tourname_test.py`
