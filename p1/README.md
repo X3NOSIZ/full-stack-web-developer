@@ -5,11 +5,13 @@ Python must be installed in the environment.
 
 # Directory Structure
 
+```
 /
 |--entertainment_center.py
 |--fresh_tomatoes.py
 |--media.py
 |--README
+```
 
 # Execution
 

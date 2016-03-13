@@ -9,10 +9,12 @@ It is critical that `tournament.sql` (see below) be imported into the database `
 
 # Dependencies
 
+```
 /
 |--tournament.sql
 |--tournament.py
 |--tournament_test.py
+```
 
 Put the submitted files in the directory `/vagrant/tournament`.
 
