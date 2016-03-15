@@ -1,0 +1,23 @@
+<div class="md-toolbar-tools">
+
+    <!-- NAME -->
+    <a href="/#/"><h1>Catalog App</h1></a>
+    
+    <!-- SPACER -->
+    <span flex></span>
+    
+    <!-- LOGIN -->
+    <md-button
+        ng-if="!vm.auth"
+        ng-click="vm.login($event)"
+        class="md-raised md-warn margin-right-0"
+        aria-label="Login">Login</md-button>
+    
+    <!-- LOGOUT -->
+    <md-button
+        ng-if="vm.auth"
+        ng-click="vm.logout($event)"
+        class="md-raised md-warn margin-right-0"
+        aria-label="Logout">Logout</md-button>
+
+</div>

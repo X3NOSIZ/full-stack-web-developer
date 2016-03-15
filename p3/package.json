@@ -1,0 +1,23 @@
+{
+  "name": "catalog",
+  "description": "catalog app",
+  "version": "0.0.1",
+  "private": true,
+  "license": "MIT",
+  "author": "Mehmet Bajin <bajin.mehmet@gmail.com>",
+  "scripts": {
+    "prestart": "npm update && npm install && bower install",
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^4.13.4",
+    "firebase": "^2.4.1",
+    "lodash": "^4.6.1",
+    "moment": "^2.12.0",
+    "rsvp": "^3.2.1"
+  },
+  "devDependencies": {
+    "blaze": "^1.1.3",
+    "bower": "^1.7.7"
+  }
+}

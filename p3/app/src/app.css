@@ -1,0 +1,73 @@
+
+/**
+ * Hide when Angular is not yet loaded and initialized
+ */
+[ng\:cloak],
+[ng-cloak],
+[data-ng-cloak],
+[x-ng-cloak],
+.ng-cloak,
+.x-ng-cloak {
+    display: none !important;
+}
+
+/**
+ * Global settings.
+ */
+body {
+    background-color: #DDDDDD;
+}
+
+/**
+ * On large enough devices, use boxed layout.
+ */
+@media(min-width: 780px) {
+    .layout-boxed {
+        padding-left: 15%;
+        padding-right: 15%;
+    }
+}
+
+/**
+ * Utility classes.
+ */
+.full-height { height: 100%; }
+.full-width  { width: 100%; }
+
+.margin-top-0       { margin-top: 0 !important; }
+.margin-right-0     { margin-right: 0 !important; }
+.margin-bottom-0    { margin-bottom: 0 !important; }
+.margin-left-0      { margin-left: 0 !important; }
+.margin-0           { margin: 0 !important; }
+.margin-top-10      { margin-top: 10px !important; }
+.margin-right-10    { margin-right: 10px !important; }
+.margin-bottom-10   { margin-bottom: 10px !important; }
+.margin-left-10     { margin-left: 10px !important; }
+.margin-10          { margin: 10px !important; }
+.margin-top-20      { margin-top: 20px !important; }
+.margin-right-20    { margin-right: 20px !important; }
+.margin-bottom-20   { margin-bottom: 20px !important; }
+.margin-left-20     { margin-left: 20px !important; }
+.margin-20          { margin: 20px !important; }
+
+.padding-top-0      { padding-top: 0 !important; }
+.padding-right-0    { padding-right: 0 !important; }
+.padding-bottom-0   { padding-bottom: 0 !important; }
+.padding-left-0     { padding-left: 0 !important; }
+.padding-0          { padding: 0 !important; }
+.padding-top-10     { padding-top: 10px !important; }
+.padding-right-10   { padding-right: 10px !important; }
+.padding-bottom-10  { padding-bottom: 10px !important; }
+.padding-left-10    { padding-left: 10px !important; }
+.padding-10         { padding: 10px !important; }
+.padding-top-20     { padding-top: 20px !important; }
+.padding-right-20   { padding-right: 20px !important; }
+.padding-bottom-20  { padding-bottom: 20px !important; }
+.padding-left-20    { padding-left: 20px !important; }
+.padding-20         { padding: 20px !important; }
+
+.border-top-1       { border-top: 1px solid #DDDDDD !important; }
+.border-right-1     { border-right: 1px solid #DDDDDD !important; }
+.border-bottom-1    { border-bottom: 1px solid #DDDDDD !important; }
+.border-left-1      { border-left: 1px solid #DDDDDD !important; }
+.border-1           { border: 1px solid #DDDDDD !important; }

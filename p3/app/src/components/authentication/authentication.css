@@ -1,0 +1,13 @@
+
+.login md-card {
+    max-width: 400px;
+    margin: auto;
+}
+
+.login md-checkbox {
+    margin: 0;
+}
+
+.login md-toolbar .md-headline {
+    margin: 0;
+}

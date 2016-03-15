@@ -1,0 +1,17 @@
+<md-content layout="column" class="full-height">
+
+    <!-- TOOLBAR -->
+    <md-toolbar ui-view="toolbar"></md-toolbar>
+
+    <!-- BELOW TOOLBAR -->
+    <div flex layout="row">
+
+        <!-- SIDEBAR -->
+        <md-content flex="30" ui-view="sidebar" class="border-right-1"></md-content>
+
+        <!-- CONTENT -->
+        <md-content flex="70" ui-view="content"></md-content>
+
+    </div>
+
+</md-content>

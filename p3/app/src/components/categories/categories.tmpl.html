@@ -1,0 +1,15 @@
+
+<!-- CATEGORY LIST -->
+<md-list class="padding-0 margin-0">
+
+    <!-- HEADER -->
+    <md-list-item class="border-bottom-1" layout="row">
+        <strong>Categories</strong>
+    </md-list-item>
+
+    <!-- CATEGORIES -->
+    <md-list-item ng-repeat="c in vm.categories" ng-click="vm.navigateTo(c, $event)" class="border-bottom-1">
+        <p>{{ c.name }}</p>
+    </md-list-item>
+
+</md-list>

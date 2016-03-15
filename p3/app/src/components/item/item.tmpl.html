@@ -1,0 +1,125 @@
+
+<!-- HEADER -->
+<md-list class="padding-0 margin-0">
+
+    <md-list-item layout="row" class="border-bottom-1">
+
+        <!-- HEADER TEXT -->
+        <strong>Item Details</strong>
+
+        <!-- SPACER -->
+        <span flex></span>
+        
+        <!-- CREATED AGO -->
+        <span ng-if="vm.item.created" class="md-caption">
+            created <span am-time-ago="vm.item.created">
+        </span>
+
+    </md-list-item>
+
+</md-list>
+
+<!-- ITEM FORM -->
+<form name="itemForm" layout="column" class="margin-top-10">
+
+    <div layout="row">
+
+        <!-- TITLE -->
+        <md-input-container flex>
+            <label>Title</label>
+            <input ng-disabled="!vm.inEditMode"
+                type="text"
+                name="title"
+                ng-model="vm.item.title"
+                required />
+            <div ng-messages="itemForm.title.$error">
+                <div ng-message="required">Title is required.</div>
+            </div>
+        </md-input-container>
+
+        <!-- CATEGORY -->
+        <md-input-container flex>
+            <label>Category</label>
+            <md-select ng-model="vm.item.category" required ng-disabled="!vm.inEditMode">
+                <md-option ng-repeat="c in vm.categories" value="{{ c.$id }}">
+                    {{ c.name }}
+                </md-option>
+            </md-select>
+        </md-input-container>
+
+    </div>
+
+    <!-- DESCRIPTION -->
+    <md-input-container>
+        <label>Description</label>
+        <textarea ng-disabled="!vm.inEditMode"
+            name="description"
+            ng-model="vm.item.description"
+            md-detect-hidden
+            md-maxlength="1000"
+            required></textarea>
+        <div ng-messages="itemForm.description.$error">
+            <div ng-message="required">Description is required.</div>
+            <div ng-message="md-maxlength">Description is too long.</div>
+        </div>
+    </md-input-container>
+
+    <!-- PICTURE -->
+    <div ng-if="vm.item.picture" layout="row" layout-align="end center" class="margin-top-20 margin-bottom-20">
+        <img alt="Item Photo" ng-src="{{ vm.item.picture }}" height="200" width="200" />
+    </div>
+
+    <!-- EDIT MODE BUTTONS -->
+    <div layout="row" layout-align="end center" ng-if="vm.inEditMode">
+        
+        <!-- UPLOAD PROGRESS -->
+        <md-progress-circular ng-show="vm.uploading" md-mode="indeterminate"></md-progress-circular>
+        
+        <!-- NEW PIC -->
+        <md-button
+            class="md-raised padding-left-10 padding-right-10"
+            ng-disabled="vm.uploading || vm.working"
+            ngf-select="vm.uploadPicture($file)"
+            ngf-multiple="false"
+            ngf-pattern="'image/*'"
+            ngf-accept="'image/*'"
+            ngf-resize="{ width: 200, height: 200 }"
+            aria-label="Upload New Picture">New Pic</md-button>
+        
+        <!-- REMOVE PIC -->
+        <md-button ng-if="vm.item.picture"
+            class="md-raised padding-left-10 padding-right-10"
+            ng-click="vm.removePicture(vm.item, $event)"
+            ng-disabled="vm.working"
+            aria-label="Remove Picture">Remove Pic</md-button>
+        
+        <!-- SAVE -->
+        <md-button
+            type="submit"
+            class="md-raised md-primary margin-right-0"
+            ng-click="vm.save(vm.item, $event)"
+            ng-disabled="itemForm.$invalid || vm.working"
+            aria-label="Save">{{ vm.working ? 'Saving...' : 'Save' }}</md-button>
+
+    </div>
+
+    <!-- EDIT/REMOVE BUTTONS -->
+    <div layout="row" layout-align="end center" ng-if="vm.showEditRemove(vm.item, vm.auth)">
+        
+        <!-- EDIT -->
+        <md-button
+            class="md-raised"
+            ng-click="vm.edit(vm.item, $event)"
+            ng-disabled="vm.working"
+            aria-label="Edit">Edit</md-button>
+
+        <!-- REMOVE -->
+        <md-button
+            class="md-raised margin-right-0"
+            ng-click="vm.remove(vm.item, $event)"
+            ng-disabled="vm.working"
+            aria-label="Remove">{{ vm.working ? 'Removing...' : 'Remove' }}</md-button>
+
+    </div>
+
+</form>

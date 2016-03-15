@@ -1,0 +1,53 @@
+{
+  "rules":{
+    ".write":"false",
+    ".read":"false",
+    "items": {
+      ".write":"false",
+      ".read":"true",
+      "$itemId": {
+        ".write":"(((newData.exists()===false||(!newData.exists()||newData.hasChildren())&&(newData.val()==null||newData.child('category').exists()&&newData.child('created').exists()&&newData.child('creator').exists()&&newData.child('description').exists()&&newData.child('title').exists())&&root.child('categories').child(newData.child('category').val()).exists()&&(!newData.child('category').exists()||newData.child('category').isString())&&(!newData.child('created').exists()||newData.child('created').isString())&&auth.uid===newData.child('creator').val()&&(!newData.child('creator').exists()||newData.child('creator').isString())&&(!newData.child('description').exists()||newData.child('description').isString())&&(!newData.child('title').exists()||newData.child('title').isString())&&(!newData.child('picture').exists()||newData.child('picture').isString())&&auth.uid!==null)))",
+        ".read":"true",
+        "category": {
+          ".write":"(((newData.parent().exists()===false&&(newData.parent().val()==null||newData.parent().child('category').exists()&&newData.parent().child('created').exists()&&newData.parent().child('creator').exists()&&newData.parent().child('description').exists()&&newData.parent().child('title').exists())&&root.child('categories').child(newData.val()).exists()&&(!newData.exists()||newData.isString())&&auth.uid!==null)))",
+          ".read":"true"
+        },
+        "created": {
+          ".write":"(((newData.parent().exists()===false&&(newData.parent().val()==null||newData.parent().child('category').exists()&&newData.parent().child('created').exists()&&newData.parent().child('creator').exists()&&newData.parent().child('description').exists()&&newData.parent().child('title').exists())&&(!newData.exists()||newData.isString())&&auth.uid!==null)))",
+          ".read":"true"
+        },
+        "creator": {
+          ".write":"(((newData.parent().exists()===false&&(newData.parent().val()==null||newData.parent().child('category').exists()&&newData.parent().child('created').exists()&&newData.parent().child('creator').exists()&&newData.parent().child('description').exists()&&newData.parent().child('title').exists())&&auth.uid===newData.val()&&(!newData.exists()||newData.isString())&&auth.uid!==null)))",
+          ".read":"true"
+        },
+        "description": {
+          ".write":"(((newData.parent().exists()===false&&(newData.parent().val()==null||newData.parent().child('category').exists()&&newData.parent().child('created').exists()&&newData.parent().child('creator').exists()&&newData.parent().child('description').exists()&&newData.parent().child('title').exists())&&(!newData.exists()||newData.isString())&&auth.uid!==null)))",
+          ".read":"true"
+        },
+        "title": {
+          ".write":"(((newData.parent().exists()===false&&(newData.parent().val()==null||newData.parent().child('category').exists()&&newData.parent().child('created').exists()&&newData.parent().child('creator').exists()&&newData.parent().child('description').exists()&&newData.parent().child('title').exists())&&(!newData.exists()||newData.isString())&&auth.uid!==null)))",
+          ".read":"true"
+        },
+        "picture": {
+          ".write":"(((newData.parent().exists()===false&&(newData.parent().val()==null||newData.parent().child('category').exists()&&newData.parent().child('created').exists()&&newData.parent().child('creator').exists()&&newData.parent().child('description').exists()&&newData.parent().child('title').exists())&&(!newData.exists()||newData.isString())&&auth.uid!==null)))",
+          ".read":"true"
+        },
+        "$other":{".validate":"false"}
+      }
+    },
+    "categories": {
+      ".write":"false",
+      ".read":"true",
+      "$categoryId": {
+        ".write":"false",
+        ".read":"true",
+        "name": {
+          ".write":"false",
+          ".read":"true"
+        },
+        "$other":{".validate":"false"}
+      }
+    },
+    "$other":{".validate":"false"}
+  }
+}

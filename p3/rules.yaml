@@ -1,0 +1,50 @@
+
+functions:
+  - isLoggedIn():       auth.uid !== null
+  - isCurrentUser(id):  auth.uid === id
+  - undeletable():      next.exists() === true
+  - deletable():        next.exists() === false
+  - itemExists(id):     root.items[id].exists()
+  - categoryExists(id): root.categories[id].exists()
+
+schema:
+  type: object
+  additionalProperties: false
+  properties:
+
+    ################
+
+    items:
+      type: object
+      $itemId:
+        type: object
+        additionalProperties: false
+        required: [ category, created, creator, description, title ]
+        constraint: deletable()
+        properties:
+          category:     {type: string, constraint: categoryExists(next)}
+          created:      {type: string}
+          creator:      {type: string, constraint: isCurrentUser(next)}
+          description:  {type: string}
+          title:        {type: string}
+          picture:      {type: string}
+
+    ################
+
+    categories:
+      type: object
+      $categoryId:
+        type: object
+        additionalProperties: false
+        required: [ name ]
+        properties:
+          name: {type: string}
+
+access:
+  - location: /categories
+    read:     true
+    write:    false
+  - location: /items
+    read:     true
+  - location: /items/$itemId
+    write:    isLoggedIn()

@@ -1,0 +1,34 @@
+
+<!-- ITEM LIST: MAY BE LATEST ITEMS OR CATEGORY-SPECIFIC ITEMS -->
+<md-list class="padding-0 margin-0">
+    
+    <!-- HEADER -->
+    <md-list-item class="border-bottom-1" layout="row">
+        <strong ng-if=" vm.showingLatest">Latest Items ({{ vm.items.length }})</strong>
+        <strong ng-if="!vm.showingLatest">{{ vm.category.name }} Items ({{ vm.items.length }})</strong>
+        <strong class="md-secondary">Category</strong>
+    </md-list-item>
+
+    <!-- ITEMS -->
+    <md-list-item ng-repeat="i in vm.items" ng-click="vm.navigateTo(i, $event)">
+        <img alt="{{ i.name }}" ng-src="{{ i.picture || 'assets/no-image.png' }}" class="md-avatar" />
+        <span>{{ i.title }}</span>
+        <span class="md-secondary">{{ i.category | category:'name' }}</span>
+    </md-list-item>
+
+    <!-- NO ITEMS MESSAGE -->
+    <md-list-item ng-if="vm.items && vm.items.length === 0">
+        <span>There are no items in this category.</span>
+    </md-list-item>
+
+</md-list>
+
+<!-- ADD ITEM FAB -->
+<md-button
+    ng-if="vm.auth"
+    ng-click="vm.addItem($event)"
+    class="md-fab md-warn md-fab-bottom-right margin-right-0 margin-bottom-0"
+    aria-label="Add Item">
+    <ng-md-icon icon="add"></ng-md-icon>
+    <md-tooltip md-direction="left">Add Item</md-tooltip>
+</md-button>
