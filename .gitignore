@@ -1,7 +1,6 @@
 
 # GLOBAL
 
-!.gitkeep
 logs/*
 tmp
 .DS_Store
