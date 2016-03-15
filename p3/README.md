@@ -44,6 +44,7 @@ blaze rules.yaml
 * The app utilizes a simple email/password based authentication scheme.
 * If the user forgets her password, she may reset it.
 * At this time, the app does not provide a means of changing the password once reset.
+* The app also allows authenticating with Google Plus for added security.
 
 ## Item Catalog Management
 
