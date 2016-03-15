@@ -41,16 +41,8 @@
             }
         });
 
-        $urlRouterProvider.when('/', goToLatest);
-        $urlRouterProvider.otherwise(goToLatest);
-    }
-
-    goToLatest.$inject = [
-        '$state'
-    ];
-
-    function goToLatest($state) {
-        $state.go('app.default.latest');
+        $urlRouterProvider.when('/', '/');
+        $urlRouterProvider.otherwise('/');
     }
     
     getCategories.$inject = [
