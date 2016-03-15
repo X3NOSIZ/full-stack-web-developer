@@ -32,7 +32,8 @@
         /**
          * Forward function declerations.
          */
-        vm.login = login;
+        vm.loginEmail = loginEmail;
+        vm.loginGoogle = loginGoogle;
 
         activate();
 
@@ -50,16 +51,45 @@
         /**
          * Login button click handler.
          */
-        function login(user, $event) {
+        function loginEmail(user, $event) {
             vm.working = true;
             authService.$authWithPassword(user, {
                 remember: vm.user.rememberMe ? 'default' : 'sessionOnly'
             })
             .then(function (auth) {
-                return $state.go('app.default.latest');
+                $state.go('app.default.latest');
             })
             .catch(function (error) {
                 $mdToast.showSimple(error.message || 'Error: Please try again.');
+            })
+            .finally(function () {
+                vm.working = false;
+            });
+        }
+
+        /**
+         * Google login button click handler.
+         */
+        function loginGoogle(withRedirect, $event) {
+            vm.working = true;
+
+            var promise;
+            if (withRedirect) {
+                promise = authService.$authWithOAuthRedirect('google');
+            } else {
+                promise = authService.$authWithOAuthPopup('google');
+            }
+
+            promise
+            .then(function () {
+                $state.go('app.default.latest');
+            })
+            .catch(function (error) {
+                if (error.code === 'TRANSPORT_UNAVAILABLE') {
+                    vm.loginGoogle(true, $event);
+                } else {
+                    $mdToast.showSimple(error.message || 'Error: Please try again.');
+                }
             })
             .finally(function () {
                 vm.working = false;

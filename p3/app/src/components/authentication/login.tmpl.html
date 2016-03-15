@@ -38,7 +38,7 @@
                     <md-button
                         class="md-primary full-width margin-left-0 margin-right-0 margin-top-10 margin-bottom-10 md-raised"
                         type="submit"
-                        ng-click="vm.login(vm.user, $event)"
+                        ng-click="vm.loginEmail(vm.user, $event)"
                         ng-disabled="loginForm.$invalid || vm.working"
                         aria-label="Login">{{ vm.working ? 'Logging in...' : 'Login' }}</md-button>
                     <!-- SIGN UP -->
@@ -46,6 +46,19 @@
                         class="md-primary full-width margin-left-0 margin-right-0 margin-top-10 margin-bottom-10"
                         href="/#/signup"
                         aria-label="Create Account">Create Account</md-button>
+                    <!-- GOOGLE LOGIN -->
+                    <div>
+                        <md-divider></md-divider>
+                        <div class="text-center margin-20">or login with</div>
+                        <div layout="row" layout-align="center center" layout-margin>
+                            <md-button class="md-icon-button"
+                                ng-click="vm.loginGoogle(false, $event)"
+                                style="background-color:#e05d6f;"
+                                aria-label="Google Plus">
+                                <ng-md-icon icon="google-plus"></ng-md-icon>
+                            </md-button>
+                        </div>
+                    </div>
                 </form>
             </md-content>
         </md-card>
