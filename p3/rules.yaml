@@ -41,10 +41,12 @@ schema:
           name: {type: string}
 
 access:
+  - location: /
+    read:     true
+    write:    false
   - location: /categories
     read:     true
     write:    false
   - location: /items
     read:     true
-  - location: /items/$itemId
     write:    isLoggedIn()

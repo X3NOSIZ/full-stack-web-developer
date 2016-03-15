@@ -70,3 +70,9 @@ Displays the items in the category with name *{category_name}*.
 Displays details for the item with a title of *{item_title}* in the category with name *{category_name}*.
 
 This implies that an item's title must be unique at the category level (a constraint enforced by the app).
+
+# Endpoints
+
+## /catalog.json
+
+This endpoint is not used by the app but is included to meet the specifications of the project.
