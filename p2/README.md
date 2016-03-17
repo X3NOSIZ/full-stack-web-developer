@@ -1,5 +1,7 @@
 
-# Files
+# Full Stack Nanodegree Project 2
+
+## Files
 
 ```
 /
@@ -8,7 +10,7 @@
 |--tournament_test.py
 ```
 
-# Setup
+## Setup
 
 From psql, import tournament.sql to create the SQL database for the tournament project.
 
@@ -16,7 +18,7 @@ From psql, import tournament.sql to create the SQL database for the tournament p
 => \i tournament.sql
 ```
 
-# Dependencies
+## Dependencies
 
 The installation script below assumes a Linux environment.
 
@@ -35,7 +37,7 @@ pip install itsdangerous
 pip install flask-httpauth
 ```
 
-# Running Tests
+## Running Tests
 
 From the directory containing the project files:
 

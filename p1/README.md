@@ -1,9 +1,11 @@
 
-# Dependencies
+# Full Stack Nanodegree Project 1
+
+## Dependencies
 
 Python must be installed in the environment.
 
-# Directory Structure
+## Directory Structure
 
 ```
 /
@@ -13,7 +15,7 @@ Python must be installed in the environment.
 |--README
 ```
 
-# Execution
+## Execution
 
 `python entertainment_center.py`
 

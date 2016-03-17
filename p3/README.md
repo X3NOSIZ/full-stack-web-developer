@@ -1,5 +1,5 @@
 
-# Stack
+# Full Stack Nanodegree Project 3
 
 ## Database
 
