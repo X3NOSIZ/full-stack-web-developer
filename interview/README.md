@@ -57,7 +57,7 @@ def makeUnorderedList(strings):
     if len(strings) == 0:
         return "<ul></ul>"
     else:
-        return '<ul><li>' + '</li><li>'.join(strings) + '</li></ul>'
+        return "<ul><li>" + "</li><li>".join(strings) + "</li></ul>"
 ```
 
 ### User (Potentially Dangerous) Input
@@ -67,12 +67,12 @@ import html
 
 def makeUnorderedList(strings):
     if len(strings) == 0:
-        return '<ul></ul>'
+        return "<ul></ul>"
     else:
         # escape any html
         for i in range(len(strings)):
             strings[i] = html.escape(strings[i])
-        return '<ul><li>' + '</li><li>'.join(strings) + '</li></ul>'
+        return "<ul><li>" + "</li><li>".join(strings) + "</li></ul>"
 ```
 
 ## 4
