@@ -29,14 +29,16 @@ To                         Action      From
 ## Users
 
 ```
-|--------------------|
-| name    | password |
-|--------------------|
-| catalog | catalog  |
-| grader  | grader   |
-| root    |          |
-|--------------------|
+|----------------------------------------|
+| name    | password                     |
+|----------------------------------------|
+| catalog | TR'5K=q|L~TzZ*xM]9cn9etHItbh |
+| grader  | [Z|i[E8vYlL{!'k-cl$M%S2K6W9- |
+|----------------------------------------|
 ```
+
+`grader` has sudo access (always prompted for password). `catalog` has default
+access.
 
 ## SSH
 
@@ -53,6 +55,7 @@ service restart with `service ssh restart`). The following edits were made:
 * Replace `Port 22` with `Port 2200`.
 * Uncomment `AuthorizedKeysFile %h/.ssh/authorized_keys`
 * Comment `PasswordAuthentication no`
+* Change `PermitRootLogin without-password` to `PermitRootLogin no`
 
 ## Software Installed
 
