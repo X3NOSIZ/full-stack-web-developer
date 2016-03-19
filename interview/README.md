@@ -60,7 +60,7 @@ def makeUnorderedList(strings):
         return "<ul><li>" + "</li><li>".join(strings) + "</li></ul>"
 ```
 
-### User (Potentially Dangerous) Input
+### User Input (Potentially Dangerous)
 
 ```python
 import html
@@ -145,7 +145,7 @@ The method `roll_dice` returns the following JSON, where rolls are in the range
 
 ```json
 {
-    "roll_1": 1
+    "roll_1": 1,
     "roll_2": 4
 }
 ```
