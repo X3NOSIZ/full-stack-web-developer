@@ -3,18 +3,18 @@
         ".read": true,
         ".write": false,
         "users": {
-          ".write": true
+            ".write": true
         },
         "games": {
-          ".write": true,
-          ".indexOn": ["user", "lastMove"]
+            ".write": true,
+            ".indexOn": ["user", "lastMove"]
         },
         "scores": {
-          ".write": true,
-          ".indexOn": ["user", "game", "incorrectGuesses"]
+            ".write": true,
+            ".indexOn": ["user", "game", "incorrectGuesses"]
         },
         "$other": {
-          ".write": false
+            ".write": false
         }
     }
 }
