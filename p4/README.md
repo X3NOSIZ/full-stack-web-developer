@@ -16,7 +16,7 @@ I recommend using [POSTMAN](https://www.getpostman.com/) or
 [curl](https://curl.haxx.se/docs/httpscripting.html) for step 4.
 
 For the email endpoint to work, `./env.js` must be updated with appropriate 
-SMTP settings
+SMTP settings.
 
 All other endpoints work out of the box.
 
