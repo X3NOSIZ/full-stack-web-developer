@@ -66,13 +66,16 @@ def makeUnorderedList(strings):
 import html
 
 def makeUnorderedList(strings):
-    if len(strings) == 0:
+    # escape any html
+    escaped = []
+    for i in range(len(strings)):
+        temp = html.escape(strings[i].strip())  # trim and escape
+        if len(temp) > 0:
+            escaped.append(temp)
+    if len(escaped) == 0:
         return "<ul></ul>"
     else:
-        # escape any html
-        for i in range(len(strings)):
-            strings[i] = html.escape(strings[i])
-        return "<ul><li>" + "</li><li>".join(strings) + "</li></ul>"
+        return "<ul><li>" + "</li><li>".join(escaped) + "</li></ul>"
 ```
 
 ## 4
@@ -81,12 +84,29 @@ def makeUnorderedList(strings):
 
 XSS enables attackers to inject scripts into web pages viewed by victims. These
 scripts may in turn monitor a user's keystrokes to steal passwords and other
-sensitive data.
+sensitive data (among other malicious activities).
 
 XSS can be prevented by escaping untrusted data before it is inserted into the
-DOM. Additionally, website should not accept JavaScript code from untrusted
-sources. Determining whether a source is trusted/untrusted still remains a
-challenge.
+DOM. Additionally, websites should not accept JavaScript code from untrusted
+sources. Determining whether a source is trusted/untrusted remains a challenge.
+
+### Cross Site Request Forgery (XSRF)
+
+XSRF involves performing malicious actions, particularly those that modify
+state, on behalf of the victim as the attacker. In other words, unauthorized
+commands are transmitted from a user that the website trusts.
+
+If the attacker is able to find a URL that executes a specific action on the
+target server while the victim is authenticated, the attacker can embed such a
+link on a page controlled by the attacker. Once the victim is tricked into
+accessing that page (for example, a hidden <iframe> or <img>), the attack
+succeeds.
+
+XSRF attacks can be prevented by requiring an almost-impossible-to-guess session
+and user specific token. The token should be randomly generated and contain
+enough bytes to render a brute-force guess infeasible. Furthermore, limiting the
+token to a user/session pair contains the impact of a successful guess of the
+token by the attacker.
 
 ### SQL Injection
 
@@ -94,7 +114,7 @@ This type of attack relies on unsafe programming practices. For example, in PHP,
 a SQL query such as the following is vulnerable:
 
 ```php
-$sql = "SELECT * FROM users WHERE username='$username' AND password='$hash';"
+$sql = "SELECT * FROM users WHERE username='$username' AND password='$hash';";
 ```
 
 Here, if the value of the variable `$username` is set directly to user-specified
@@ -108,19 +128,29 @@ johndoe';--
 This attack works, because when the user-specified SQL is injected into the
 query, the query now reads:
 
-```
-$sql = "SELECT * FROM users WHERE username='johndoe';--' AND password='$hash';"
+```php
+$sql = "SELECT * FROM users WHERE username='johndoe';--' AND password='$hash';";
 ```
 
 The WHERE clause no longer evaluates the password, effectively eliminating any
 security granted by a password-based authentication protocol.
 
-SQL injection attacks can be prevented by escaping all user-specified input.
+SQL injection attacks can be prevented by escaping all user-specified input or
+by using prepared statements. For example, with SQLite3:
+
+```php
+$query = "SELECT * FROM users WHERE username=:username AND password=:hash;";
+$statement = $db->prepare($query);
+$statement->bindValue(":username", $username, SQLITE3_TEXT);
+$statement->bindValue(":hash", $hash, SQLITE3_TEXT);
+$result = $statement->execute();
+```
 
 # 5
 
 ```python
 from flask import Flask
+from flask import jsonify
 app = Flask(__name__)
 
 import json
@@ -133,7 +163,7 @@ def hello_world():
 
 @app.route('/roll')
 def roll_dice():
-    return flask.jsonify(roll_1=random.randint(1,6), roll_2=random.randint(1,6))
+    return jsonify(roll_1=random.randint(1,6), roll_2=random.randint(1,6))
 
 if __name__ == '__main__':
     app.debug = True
@@ -154,19 +184,53 @@ The method `roll_dice` returns the following JSON, where rolls are in the range
 
 Please find the job description [here](https://www.google.com/about/careers/search#!t=jo&jid=42165&).
 
-My goals a year from now would include:
+## What milestones do you see yourself reaching?
 
-## Learning
+In addition to fulfilling the job responsibilities, I see myself identifying and
+designing the right fixes to bugs. Bugs that almost every non-trivial software
+product or solution contains. Even a groundbreaking company like Google ships
+software with bugs. I see no more effective way to have an impact than to
+efficiently identify and resolve such bugs in the software.
 
-Google is a place that fosters learning. I would like to learn and master the
-technologies that has propelled Google into its position in the market today.
-In particular, I am interested in improving my mastery of automated software
-analysis and testing tools.
+## How do you quantify your progress to know if you have reached your goal?
 
-## Experience
+Quantifying progress comes down to the impact of a bug-fix in the user base.
+Here, users may be end-users, admins, developers, or another population
+altogether. Regardless, it is possible to quantify the cost of a bug's
+remaining unfixed in economical terms. How will I know I have reached my goal?
+Simple: Save the company X man hours and/or dollars, where X is large enough
+to be noticeable.
 
-I find myself to a natural leader, but I understand that one must earn his
-stripes before advancing to a leadership position. In my first year, I would
-like to gain the experience required to find myself in a position where I am
-leading teams of developers on projects, helping steer the direction of the
-effort in addition to mentoring newer team members.
+## What projects or features would you like to contribute to? In what way?
+
+This is almost impossible to answer for this position. Google is a company that
+hires based on fit with the company first, and only then are new hires matched
+to a team or project; however, Google also allows employees to switch teams
+when it makes sense to do so.
+
+Given these factors, I'd like to find myself contributing to end-user facing,
+high-volume features such as YouTube, Inbox, or the like. With my background,
+I would be most prepared to develop back-end code that synthesizes meaningful
+conclusions from the rich data stores of Google applications.
+
+## Are there specific tools or languages that you would like to use to accomplish this?
+
+I would not pidgeonhole myself to specific tools, technologies, or languages.
+I pride myself in my ability to pick up new skills, especially those with
+steep learning curves. I am also humble and aware enough to trust in what a
+company like Google has chosen. For these reasons, I welcome any challenge in
+this arena.
+
+## Why are you a good fit? Can you highlight how your values and mission are aligned?
+
+I love to learn. In fact, I must continually learn and grow; otherwise, I'm
+stagnating, and if I'm stagnating, then I'm unhappy. Google is a company that
+fosters learning. Engineers regularly give talks on the projects they are
+working on and the technologies they are developing. Google is an industry
+leader, and the software solutions developed push the envelope and carve new
+possibilities. The recent achievements in AI technology with AlphaGo or self-
+driving cars are examples of this.
+
+There is no such thing as a finish line in the field of software engineering.
+That's what draws me to the field in the first place. I see no better place than
+Google to fuel this passion.
