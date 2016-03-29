@@ -6,16 +6,16 @@
 This project uses `npm` (Node Package Manager) to manage dependencies.
 
 1. Install [Node](https://nodejs.org/).
-2. From the top-level `p4` project directory, execute `npm install` to install 
+2. From the top-level `p4` project directory, execute `npm install` to install
 dependencies.
 3. Once finished, execute `npm start` to start the web server on port 8080.
-4. Issue the HTTP GET/PUT/POST/DELETE requests to the appropriate endpoints at 
+4. Issue the HTTP GET/PUT/POST/DELETE requests to the appropriate endpoints at
 `http://localhost:8080/`.
 
-I recommend using [POSTMAN](https://www.getpostman.com/) or 
+I recommend using [POSTMAN](https://www.getpostman.com/) or
 [curl](https://curl.haxx.se/docs/httpscripting.html) for step 4.
 
-For the email endpoint to work, `./env.js` must be updated with appropriate 
+For the email endpoint to work, `./env.js` must be updated with appropriate
 SMTP settings.
 
 All other endpoints work out of the box.
@@ -24,17 +24,17 @@ All other endpoints work out of the box.
 
 ## Database
 
-The database is powered by [Firebase](https://www.firebaseio.com/), a scalable 
+The database is powered by [Firebase](https://www.firebaseio.com/), a scalable
 real-time NOSQL database solution provided by Google.
 
 Firebase stores data in key/value pairs.
 
-Everything is accessible at a URL. For example, to view the `users` in the 
-database, issue a GET request to 
-`https://hangman-app.firebaseio.com/users.json` (similarly for `/games.json` 
+Everything is accessible at a URL. For example, to view the `users` in the
+database, issue a GET request to
+`https://hangman-app.firebaseio.com/users.json` (similarly for `/games.json`
 and `/scores.json`).
 
-The endpoints do not use this feature of Firebase, however. Instead, they 
+The endpoints do not use this feature of Firebase, however. Instead, they
 utilize the [Node API](https://www.npmjs.com/package/firebase).
 
 The [security rules](https://www.firebase.com/docs/security/guide/) for the
@@ -44,7 +44,7 @@ database are accessible in `rules.json`.
 
 ## Game Description
 
-Hangman is a simple one player game. The game instructions are available 
+Hangman is a simple one player game. The game instructions are available
 [here](https://en.wikipedia.org/wiki/Hangman_(game)).
 
 
@@ -53,19 +53,19 @@ Hangman is a simple one player game. The game instructions are available
 
 The game is represented as a single word that the player tries to guess.
 
-The player is allowed at most 5 incorrect guesses. The 6th incorrect guess ends 
-the game in a loss. At any point, the player may guess a letter or a word. The 
-penalty for an incorrect guess is always the same (consumption of an incorrect 
-guess). If the player guesses every letter in the word or the word itself 
+The player is allowed at most 5 incorrect guesses. The 6th incorrect guess ends
+the game in a loss. At any point, the player may guess a letter or a word. The
+penalty for an incorrect guess is always the same (consumption of an incorrect
+guess). If the player guesses every letter in the word or the word itself
 before running out of incorrect guesses, the game ends in a victory.
 
 Rankings are based on players' win percentages. There are no tie-breakers.
 
-A player's score for a game is the number of incorrect guesses consumed. If 
-this number if 6, the game must have ended in a loss. Otherwise, the game must 
+A player's score for a game is the number of incorrect guesses consumed. If
+this number if 6, the game must have ended in a loss. Otherwise, the game must
 have ended in a victory.
 
-A player is allowed to cancel a game before it has ended. Such a game is not 
+A player is allowed to cancel a game before it has ended. Such a game is not
 scored and but still contributes to the player's ranking as a loss.
 
 An active game does not contribute to a player's ranking.
@@ -104,6 +104,11 @@ Every URL is RESTful and may support one of four different HTTP verbs:
 * POST requests create objects.
 * PUT requests update objects.
 * DELETE requests delete objects.
+
+### Parameters
+
+* GET requests expect parameter values (if any) in the request query (i.e. URL).
+* POST requests expect parameter values (if any) in the request body.
 
 ### Structure
 
@@ -155,28 +160,28 @@ The data key is the meat of the response. It may be a list or dictionary, but ei
    do not need to be unique as users are identified uniquely by their keys.
 
 #### get\_user
- - Path: '/user'
+ - Path: '/user/{user\_key}'
  - Method: GET
- - Parameters: user\_key
+ - Parameters: None
  - Returns: UserForm
  - Description: Get details of a user.
 
 #### get\_user\_games
- - Path: '/user/games'
+ - Path: '/user/{user\_key}/games'
  - Method: GET
- - Parameters: user\_key
+ - Parameters: None
  - Returns: GameForms
  - Description: Get all active games of a user.
-   
+
 #### get\_user\_scores
- - Path: '/user/scores/{user\_key}'
+ - Path: '/user/{user\_key}/scores'
  - Method: GET
- - Parameters: user\_key
+ - Parameters: None
  - Returns: ScoreForms
  - Description: Returns all scores recorded by the given user (unordered).
 
 #### get\_user\_rankings
- - Path: '/user/rankings'
+ - Path: '/users/rankings'
  - Method: GET
  - Parameters: None
  - Returns: UserForms
@@ -192,11 +197,11 @@ The data key is the meat of the response. It may be a list or dictionary, but ei
  - Returns: GameForm
  - Description: Creates a new game for the user (with the given key) with a
    randomly selected secret word of length 10. Words contain only letters.
-    
+
 #### get\_game
  - Path: '/game/{game\_key}'
  - Method: GET
- - Parameters: game\_key
+ - Parameters: None
  - Returns: GameForm
  - Description: Returns the current state of a game.
 
@@ -210,16 +215,16 @@ The data key is the meat of the response. It may be a list or dictionary, but ei
 #### make\_guess
  - Path: '/game/{game\_key}'
  - Method: PUT
- - Parameters: game\_key, guess
+ - Parameters: guess
  - Returns: GameForm
  - Description: Accepts a letter/word and returns the updated state of the game.
    A letter must be from the English alphabet. A word may be any string. If
    guess is a single character string, it is assumed to be a letter. Otherwise,
    it is assumed to be a word.
-   
+
    If this causes a game to end, a corresponding score entity will be created.
    The score is the number of incorrect guesses (lower is better).
-   
+
    For letters:
    If guess is correct, game continues unless the guess completes the word,
    at which point the user wins the game.
@@ -234,7 +239,7 @@ The data key is the meat of the response. It may be a list or dictionary, but ei
 #### cancel\_game
  - Path: '/game/{game\_key}'
  - Method: DELETE
- - Parameters: game\_key
+ - Parameters: None
  - Returns: GameForm
  - Description: Cancels a game by setting the cancelled flag to true. This is
    recorded as a loss against the player.
@@ -242,14 +247,14 @@ The data key is the meat of the response. It may be a list or dictionary, but ei
 #### get\_game\_history
  - Path: '/game/{game\_key}/history'
  - Method: GET
- - Parameters: game\_key
+ - Parameters: None
  - Returns: GameHistoryForm
  - Description: Returns the guess history of a game as a list of tuples in the
    form (guess, word). For example:
    [('A', '\_\_\_\_\_\_\_A\_\_'), ('S', 'S\_\_\_\_\_\_A\_\_')]
 
 ### SCORE
-   
+
 #### get\_high\_scores
  - Path: '/scores/leaderboard'
  - Method: GET
@@ -257,7 +262,7 @@ The data key is the meat of the response. It may be a list or dictionary, but ei
  - Returns: ScoreForms
  - Description: Returns a list of high scores in descending order. Returns at
    most N results, where N is number\_of\_results.
-   
+
 #### get\_scores
  - Path: '/scores'
  - Method: GET
@@ -267,8 +272,8 @@ The data key is the meat of the response. It may be a list or dictionary, but ei
 
 ### EMAIL
 
-#### send\_emails
- - Path: '/emails'
+#### send\_reminder\_emails
+ - Path: '/email/reminders'
  - Method: GET
  - Parameters: None
  - Returns: GameForms
@@ -336,48 +341,3 @@ The data key is the meat of the response. It may be a list or dictionary, but ei
 * `game` is the key corresponding to the game that was scored.
 * `user` is the key corresponding to the user that was scored.
 * `incorrectGuesses` is the number of incorrect guesses at the time the game ended.
-
-
-
-## Design Decisions
-
-### User
-
-- User model does not require that the name be unique, because a user is
-  uniquely identified by an auto-generated key.
-- User names and emails are required however, because without them, there would
-  not be a meaningful human-readable identifier of a user or a means to remind
-  the user to finish incomplete games.
-- User model also tracks the number of games won and the total number of games
-  played for generating rankings based on users' win percentages.
-- The `created` property is additional metadata that does not drive behavior
-  at the moment but could be used to generate reports on adoption rates.
-
-### Game
-
-- Game model tracks the progress of the game with the `word` and `guesses`
-  properties. `word` does not change while the `guesses` array increases in size
-  by one after every letter or word guess.
-- `user` networks back to the key of the user playing the game, allowing
-  selection of games by user (this property is indexed for efficient querying).
-- `start` and `end` track the duration of the game in time.
-- When a user wishes to cancel an active game (no `end`), the `cancelled` flag
-  is used to designate the game as cancelled instead of deleting the game.
-  This way, there is a record of the user's cancelled games should they ever be
-  needed in the future.
-- Whenever the game state is returned to the public, any not-yet-guessed letters
-  in the `word` are masked with an underscore (`_`). Otherwise, everyone would
-  win.
-
-### Score
-
-- Score model tracks the number of incorrect guesses consumed to end a game.
-- `user` and `game` properties allow for efficient querying of scores (these
-  properties are indexed just like `Game.user`).
-
-### Gameplay
-
-- When a new game starts, the word is randomly chosen from a list of words.
-- The user must guess one letter or one word at a time.
-- The user may cancel a game (counts as a loss).
-- By default, a user is allowed at most 5 incorrect guesses before a loss.

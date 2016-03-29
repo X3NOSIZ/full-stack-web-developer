@@ -50,7 +50,7 @@ var INCORRECT_GUESS_LIMIT = process.env.INCORRECT_GUESS_LIMIT > 0 ? process.env.
 
 /**
  * Constructor.
- * @param data Data to construct with.
+ * @param {Object} data Data to construct with.
  */
 function Game(data) {
     data = data || {};
@@ -94,7 +94,7 @@ Game.prototype = {
 
 /**
  * Get the key/value pairs that make up the entity.
- * @param omitKey If true, exclude `key` property.
+ * @param {Boolean} omitKey If true, exclude `key` property.
  */
 function getData(omitKey) {
     var data = {
@@ -112,7 +112,7 @@ function getData(omitKey) {
 
 /**
  * Get a list of incorrect guesses.
- * @return Incorrect guesses.
+ * @returns {Array} Incorrect guesses.
  */
 function getIncorrectGuesses() {
     var self = this;
@@ -123,7 +123,7 @@ function getIncorrectGuesses() {
 
 /**
  * Get the game history.
- * @return List of tuples in format: [[guess, word], [guess, word], ...]
+ * @returns {Array} List of tuples in format: [[guess, word], [guess, word], ...]
  */
 function getHistory() {
     var self = this;
@@ -148,8 +148,8 @@ function getHistory() {
 
 /**
  * Get the idle time of the game.
- * @param format How to format the time, defaults to 'hours'.
- * @return Idle time.
+ * @param {String} format How to format the time, defaults to 'hours'.
+ * @returns {Number} Idle time.
  */
 function getIdleTime(format) {
     var now = moment.utc();
@@ -159,7 +159,7 @@ function getIdleTime(format) {
 
 /**
  * Get guesses.
- * @param Guesses delimited by comma.
+ * @returns {String} Guesses delimited by comma.
  */
 function getGuesses() {
     return this.guesses.join(', ');
@@ -167,7 +167,7 @@ function getGuesses() {
 
 /**
  * Get start time.
- * @param Start time in ISO-8601 format.
+ * @returns {String} Start time in ISO-8601 format.
  */
 function getStartTime() {
     return moment.utc(this.start).fromNow();
@@ -175,7 +175,7 @@ function getStartTime() {
 
 /**
  * Check if game is active.
- * @return True if active, false otherwise.
+ * @returns {Boolean} True if active, false otherwise.
  */
 function active() {
     return !this.cancelled && _.isEmpty(this.end);
@@ -183,7 +183,7 @@ function active() {
 
 /**
  * Get the key.
- * @return Key.
+ * @returns {String} Key.
  */
 function getKey() {
     return this.key;
@@ -191,8 +191,8 @@ function getKey() {
 
 /**
  * Set the key.
- * @param key New key.
- * @return this
+ * @param {String} key New key.
+ * @returns {Game} this
  */
 function setKey(key) {
     this.key = key;
@@ -201,7 +201,7 @@ function setKey(key) {
 
 /**
  * Unmask the word based on current guesses.
- * @return this
+ * @returns {Game} this
  */
 function mask() {
     this.word = Game.applyGuesses(this.word, this.guesses);
@@ -210,7 +210,7 @@ function mask() {
 
 /**
  * Cancel the game.
- * @return True if successful, false otherwise (i.e. game was inactive).
+ * @returns {Boolean} True if successful, false otherwise (i.e. game was inactive).
  */
 function cancel() {
     if (this.active()) {
@@ -223,7 +223,7 @@ function cancel() {
 
 /**
  * End the game.
- * @return this
+ * @returns {Game} this
  */
 function finish() {
     if (_.isEmpty(this.end)) {
@@ -234,9 +234,9 @@ function finish() {
 
 /**
  * Make a guess.
- * @param letterOrWord If single character, treated as letter. Word otherwise.
- * @param user Reference to the game user.
- * @return Promises that are fulfilled when effects of the guess are completed.
+ * @param {String} letterOrWord If single character, treated as letter. Word otherwise.
+ * @param {User} user Reference to the game user.
+ * @returns {Object} Promises that are fulfilled when effects of the guess are completed.
  */
 function guess(letterOrWord, user) {
     var self = this;
@@ -291,7 +291,7 @@ function guess(letterOrWord, user) {
 
 /**
  * Persist an entity in the database. Creates entity if necessary.
- * @return Promise that is fulfilled with a reference to the entity.
+ * @returns {Object} Promise that is fulfilled with a reference to the entity.
  */
 function put() {
     var self = this;
@@ -345,7 +345,7 @@ function makeGames(gamesData) {
 
 /**
  * Get all games.
- * @return Promise that is fulfilled with a list of game objects.
+ * @returns {Object} Promise that is fulfilled with a list of game objects.
  */
 function get() {
     return new q.Promise(function (resolve, reject) {
@@ -372,9 +372,9 @@ function getByKey(key) {
 
 /**
  * Apply guesses to a word.
- * @param word
- * @param guesses
- * @return Word with guesses applied.
+ * @param {String} word
+ * @param {Array} guesses
+ * @returns {String} Word with guesses applied.
  */
 function applyGuesses(word, guesses) {
     // word correctly guessed?

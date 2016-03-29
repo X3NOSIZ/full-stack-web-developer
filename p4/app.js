@@ -138,10 +138,8 @@ app.post('/user', function (request, response) {
 /**
  * get_user: Get details of a user.
  */
-app.get('/user', function (request, response) {
-    if (_.isEmpty(request.query.user_key)) {
-        return response.status(400).json(util.envelope(errorInvalidParameter));
-    } else if (_.isEmpty(request.user)) {
+app.get('/user/:user_key', function (request, response) {
+    if (_.isEmpty(request.user)) {
         return response.status(400).json(util.envelope(errorNotFound));
     } else {
         return response.status(200).json(util.envelope(request.user));
@@ -151,14 +149,15 @@ app.get('/user', function (request, response) {
 /**
  * get_user_games: Get all active games of a user.
  */
-app.get('/user/games', function (request, response) {
-    if (_.isEmpty(request.query.user_key)) {
-        return response.status(400).json(util.envelope(errorInvalidParameter));
-    } else if (_.isEmpty(request.user)) {
+app.get('/user/:user_key/games', function (request, response) {
+    if (_.isEmpty(request.user)) {
         return response.status(400).json(util.envelope(errorNotFound));
     } else {
         request.user.getGames(true)
         .then(function (games) {
+            games = _.map(games, function (game) {
+                return game.mask();
+            });
             return response.status(200).json(util.envelope(games));
         })
         .catch(function (error) {
@@ -170,10 +169,8 @@ app.get('/user/games', function (request, response) {
 /**
  * get_user_scores: Get all scores recorded for user (unordered).
  */
-app.get('/user/scores', function (request, response) {
-    if (_.isEmpty(request.query.user_key)) {
-        return response.status(400).json(util.envelope(errorInvalidParameter));
-    } else if (_.isEmpty(request.user)) {
+app.get('/user/:user_key/scores', function (request, response) {
+    if (_.isEmpty(request.user)) {
         return response.status(400).json(util.envelope(errorNotFound));
     } else {
         request.user.getScores()
@@ -189,14 +186,14 @@ app.get('/user/scores', function (request, response) {
 /**
  * get_user_rankings: Get the leaderboard.
  */
-app.get('/user/rankings', function (request, response) {
+app.get('/users/rankings', function (request, response) {
     models.User.get()
     .then(function (users) {
         users = _.filter(users, function (user) { return user.total > 0; });
         var rankings = _.sortBy(users, function (user) {
             if (user.wins > 0 && user.total > 0) {
                 var winPercentage = (user.wins * 100.0) / user.total;
-                return Math.floor(winPercentage);
+                return _.floor(winPercentage);
             } else {
                 return 0;
             }

@@ -49,7 +49,7 @@ var reminderEmailTemplate = transport.templateSender({
         '<pre>',
         'Hello {{name}},',
         '',
-        'This is gentle reminder to resume your hangman game that was started {{start}}.',
+        'This a is gentle reminder to resume your hangman game that was started {{start}}.',
         '',
         'Game:    {{key}}',
         'Word:    {{word}}',
@@ -64,9 +64,9 @@ var reminderEmailTemplate = transport.templateSender({
 
 /**
  * Send one reminder email.
- * @param toUse Recipient.
- * @param regardingGame Game to send reminder for.
- * @return Promise that is fulfilled when the email is sent.
+ * @param {User} toUser Recipient.
+ * @param {Game} regardingGame Game to send reminder for.
+ * @returns {Object} Promise that is fulfilled when the email is sent.
  */
 function sendReminderEmail(toUser, regardingGame) {
     return new q.Promise(function (resolve, reject) {
@@ -90,8 +90,8 @@ function sendReminderEmail(toUser, regardingGame) {
 
 /**
  * Get users for a list of games.
- * @param games List of game objects.
- * @return Promise that is fulfilled with a list of user objects.
+ * @param {Array} games List of game objects.
+ * @returns {Object} Promise that is fulfilled with a list of user objects.
  */
 function getUsersFromGames(games) {
     var userKeys = _.uniq(_.map(games, 'user'));
@@ -106,8 +106,8 @@ function getUsersFromGames(games) {
 
 /**
  * Wrap an object in the appropriate envelope for an API response.
- * @param object Object to wrap, eg. Error.
- * @return Envelope.
+ * @param {Object} object Object to wrap, eg. Error.
+ * @returns {Object} Envelope.
  */
 function envelope(object) {
     if (object instanceof models.Error) {
@@ -124,6 +124,8 @@ function envelope(object) {
 
 /**
  * Send reminder emails to idle games (no moves in the past N hours).
+ * @param {Array} games Games to send reminders for.
+ * @returns {Object} Promise fulfilled with the games list when emails are sent.
  */
 function sendReminderEmails(games) {
     var idleGames = _.filter(games, function (game) {

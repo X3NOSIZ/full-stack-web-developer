@@ -24,7 +24,7 @@ var Score = require('./score');
 
 /**
  * Constructor.
- * @param data Data to construct with.
+ * @param {Object} data Data to construct with.
  */
 function User(data) {
     data = data || {};
@@ -53,7 +53,7 @@ User.prototype = {
 
 /**
  * Get the key/value pairs that make up the entity.
- * @param omitKey If true, exclude `key` property.
+ * @param {Boolean} omitKey If true, exclude `key` property.
  */
 function getData(omitKey) {
     var data = {
@@ -69,6 +69,7 @@ function getData(omitKey) {
 
 /**
  * Get the key.
+ * @returns {String} Key.
  */
 function getKey() {
     return this.key;
@@ -76,7 +77,8 @@ function getKey() {
 
 /**
  * Set the key.
- * @param key New key.
+ * @param {String} key New key.
+ * @returns {User} this
  */
 function setKey(key) {
     this.key = key;
@@ -85,7 +87,7 @@ function setKey(key) {
 
 /**
  * Record a win.
- * @return this
+ * @returns {User} this
  */
 function recordWin() {
     this.wins++;
@@ -95,7 +97,7 @@ function recordWin() {
 
 /**
  * Record a loss.
- * @return this
+ * @returns {User} this
  */
 function recordLoss() {
     this.total++;
@@ -104,7 +106,7 @@ function recordLoss() {
 
 /**
  * Persist an entity in the database. Creates entity if necessary.
- * @return Promise that is fulfilled with a reference to the entity.
+ * @returns {Object} Promise that is fulfilled with a reference to the entity.
  */
 function put() {
     var self = this;
@@ -130,7 +132,7 @@ function put() {
 
 /**
  * Get the games played by the user.
- * @return Promise that is fulfilled with a list of game objects.
+ * @returns {Object} Promise that is fulfilled with a list of game objects.
  */
 function getGames(active) {
     var self = this;
@@ -153,7 +155,7 @@ function getGames(active) {
 
 /**
  * Get the scores recorded for a user.
- * @return Promise that is fulfilled with a list of score objects.
+ * @returns {Object} Promise that is fulfilled with a list of score objects.
  */
 function getScores() {
     var self = this;
@@ -197,7 +199,7 @@ function makeUsers(usersData) {
 
 /**
  * Get all users.
- * @return Promise that is fulfilled with a list of user objects.
+ * @returns {Object} Promise that is fulfilled with a list of user objects.
  */
 function get() {
     return new q.Promise(function (resolve, reject) {

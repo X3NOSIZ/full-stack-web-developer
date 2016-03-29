@@ -33,7 +33,7 @@ var firebaseRef = new firebase(process.env.FIREBASE_URL);
 
 /**
  * Get a reference to the database (singleton).
- * @return Database reference.
+ * @returns {Object} Database reference.
  */
 function getRef() {
     return firebaseRef;
@@ -41,8 +41,8 @@ function getRef() {
 
 /**
  * Get the results of a query.
- * @param queryRef Query.
- * @return Query result object.
+ * @param {Object} queryRef Query.
+ * @returns {Object/String/Number/Boolean} Query result object.
  */
 function getQuery(queryRef) {
     return new q.Promise(function (resolve, reject) {
@@ -64,8 +64,8 @@ function getQuery(queryRef) {
 
 /**
  * Get a value at a location.
- * @param location Location.
- * @return Value at the location.
+ * @param {String} location Location.
+ * @returns {Object/String/Boolean/Number} Value at the location.
  */
 function getValue(location) {
     return getQuery(firebaseRef.child(location));
@@ -73,9 +73,9 @@ function getValue(location) {
 
 /**
  * Update an existing entity.
- * @param location Entity kind.
- * @param value New entity values.
- * @return New entity values.
+ * @param {String} location Entity kind.
+ * @param {Object/String/Number/Boolean} value New entity values.
+ * @returns {Object} New entity values.
  */
 function putValue(location, value) {
     return new q.Promise(function (resolve, reject) {
@@ -95,9 +95,9 @@ function putValue(location, value) {
 
 /**
  * Push an entity into a kind.
- * @param location Entity kind.
- * @param value Entity value.
- * @return Key of newly generated entity.
+ * @param {String} location Entity kind.
+ * @param {Object} value Entity value.
+ * @returns {String} Key of newly generated entity.
  */
 function pushValue(location, value) {
     return new q.Promise(function (resolve, reject) {

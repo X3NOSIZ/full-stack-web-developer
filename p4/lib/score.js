@@ -22,7 +22,7 @@ var db = require('./database');
 
 /**
  * Constructor.
- * @param data Data to construct with.
+ * @param {Object} data Data to construct with.
  */
 function Score(data) {
     this.key = null;
@@ -44,7 +44,7 @@ Score.prototype = {
 
 /**
  * Get the key/value pairs that make up the entity.
- * @param omitKey If true, exclude `key` property.
+ * @param {Boolean} omitKey If true, exclude `key` property.
  */
 function getData(omitKey) {
     var data = {
@@ -58,7 +58,7 @@ function getData(omitKey) {
 
 /**
  * Get the key.
- * @return Key.
+ * @returns {String} Key.
  */
 function getKey() {
     return this.key;
@@ -66,8 +66,8 @@ function getKey() {
 
 /**
  * Set the key.
- * @param key New key.
- * @return this
+ * @param {String} key New key.
+ * @returns {Object} this
  */
 function setKey(key) {
     this.key = key;
@@ -76,7 +76,7 @@ function setKey(key) {
 
 /**
  * Persist an entity in the database. Creates entity if necessary.
- * @return Promise that is fulfilled with a reference to the entity.
+ * @returns {Object} Promise that is fulfilled with a reference to the entity.
  */
 function put() {
     var self = this;
@@ -129,7 +129,7 @@ function makeScores(scoresData) {
 
 /**
  * Get all scores.
- * @return Promise that is fulfilled with a list of score objects.
+ * @returns {Object} Promise that is fulfilled with a list of score objects.
  */
 function get() {
     return new q.Promise(function (resolve, reject) {
@@ -143,11 +143,12 @@ function get() {
 
 /**
  * Get highest scores.
- * @param limit Number of scores to return (defaults to 10).
- * @return Promise that is fulfilled with a list of score objects.
+ * @param {Number} limit Number of scores to return (defaults to 10).
+ * @returns {Object} Promise that is fulfilled with a list of score objects.
  */
 function getHighest(limit) {
-    if (!_.isNumber(limit) || limit <= 0) {
+    limit = _.parseInt(limit);
+    if (isNaN(limit) || limit <= 0) {
         limit = 10;
     }
     return new q.Promise(function (resolve, reject) {
